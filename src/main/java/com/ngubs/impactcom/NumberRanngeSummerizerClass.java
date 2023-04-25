@@ -19,6 +19,7 @@ public class NumberRanngeSummerizerClass implements NumberRanngeSummerizer{
     /**
     *   @param input: String sequence of numbers to process/sort and send to 
     *   the summerizeCollection() method
+     * @return Collection of Integer
     * 
     */
     @Override
@@ -35,12 +36,12 @@ public class NumberRanngeSummerizerClass implements NumberRanngeSummerizer{
        
         try{
             nums = inputValues.stream()  //Push inputValues to a stream
-                    .map(num -> Integer.parseInt(num.trim())) //Convert values to Integer
-                    .sorted() //Sort the 
-                    .collect(Collectors.toList());  //Collect the converted nums and storing to the nums List
+                    .map(num -> Integer.valueOf(num.trim())) //Convert values to Integer
+                    .sorted()
+                    .collect(Collectors.toList());  //Collect the nums
             
         }catch(NumberFormatException e){
-            System.out.print(e.toString());
+            System.err.print(e.toString());
         }
           
         return nums;
@@ -49,6 +50,7 @@ public class NumberRanngeSummerizerClass implements NumberRanngeSummerizer{
     /**
     *   @param input: Collection of a sorted sequence of numbers to process/group  
     *   if they are sequential
+     * @return String of summerized sequence
     * 
     */
     @Override
@@ -58,8 +60,8 @@ public class NumberRanngeSummerizerClass implements NumberRanngeSummerizer{
             return "";
         }
         
-        List<String> groupedItemsList = new ArrayList<String>();
-        List<Integer> inputAL = new ArrayList<Integer>(input);
+        List<String> groupedItemsList = new ArrayList<>();
+        List<Integer> inputAL = new ArrayList<>(input);
         
         int start = inputAL.get(0);
         int end = start;
@@ -87,7 +89,8 @@ public class NumberRanngeSummerizerClass implements NumberRanngeSummerizer{
         
         String results = groupedItemsList.stream()
                             .collect(Collectors.toList())
-                            .toString().replaceAll("\\[", "").replaceAll("\\]", "");
+                            .toString().replaceAll("\\[", "")
+                            .replaceAll("\\]", "");
         
         return results;
     }
