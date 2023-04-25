@@ -4,7 +4,11 @@
  */
 package com.ngubs.impactcom;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -12,14 +16,80 @@ import java.util.Collection;
  */
 public class NumberRanngeSummerizerClass implements NumberRanngeSummerizer{
 
+    /**
+    *   @param input: String sequence of numbers to process/sort and send to 
+    *   the summerizeCollection() method
+    * 
+    */
     @Override
     public Collection<Integer> collect(String input) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
+        Collection<Integer> nums = new ArrayList<>();
+        //Checking if the input string is not empty 
+        if (input == null || input.isEmpty()) {
+            return nums;
+        }
+        
+        //Store input items in a List of Strings
+        Collection<String> inputValues = Arrays.asList(input.split(","));
+       
+        try{
+            nums = inputValues.stream()  //Push inputValues to a stream
+                    .map(num -> Integer.parseInt(num.trim())) //Convert values to Integer
+                    .sorted() //Sort the 
+                    .collect(Collectors.toList());  //Collect the converted nums and storing to the nums List
+            
+        }catch(NumberFormatException e){
+            System.out.print(e.toString());
+        }
+          
+        return nums;
     }
 
+    /**
+    *   @param input: Collection of a sorted sequence of numbers to process/group  
+    *   if they are sequential
+    * 
+    */
     @Override
     public String summarizeCollection(Collection<Integer> input) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
+        if (input == null || input.isEmpty()) {
+            return "";
+        }
+        
+        List<String> groupedItemsList = new ArrayList<String>();
+        List<Integer> inputAL = new ArrayList<Integer>(input);
+        
+        int start = inputAL.get(0);
+        int end = start;
+        
+        for (int i = 1; i < inputAL.size(); i++) {
+            int currentNum = inputAL.get(i);        //current number on the list
+            
+            if (currentNum == end + 1) {                 //check if current number = prev + 1
+                end = currentNum;
+            } else {
+                if (start == end) {
+                    groupedItemsList.add(start+"");
+                } else {
+                    groupedItemsList.add(start+"-"+end);
+                }
+                start = end = currentNum;
+            }
+        }
+        
+        if (start == end) 
+            groupedItemsList.add(start+"");
+        else 
+            groupedItemsList.add(start+"-"+end);
+        
+        
+        String results = groupedItemsList.stream()
+                            .collect(Collectors.toList())
+                            .toString().replaceAll("\\[", "").replaceAll("\\]", "");
+        
+        return results;
     }
     
 }
