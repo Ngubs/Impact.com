@@ -27,42 +27,48 @@ public class NumberRanngeSummerizerClassTest {
     
     @org.junit.jupiter.api.Test
     public void testCollectMethodReturningEmptyList() {
-        var nrs = new NumberRanngeSummerizerClass();
-        assertEquals(new ArrayList<Integer>(), nrs.collect(""));    
+        var obj = new NumberRanngeSummerizerClass();
+        assertEquals(Collections.emptyList(), obj.collect(""));    
     }
     
     @org.junit.jupiter.api.Test
     public void testCollectMethodReturningCorrectList() {
-        var nrs = new NumberRanngeSummerizerClass();
+        var obj = new NumberRanngeSummerizerClass();
         
         var expected = Arrays.asList(1,3,6,7,8,12,13,14,15,21,22,23,24,31);
+        //Passing an unsorted list
+        var results = obj.collect("3,1,6,31,7,8,12,14,13,15,21,22,23,24");
         
-        assertEquals(expected, nrs.collect("1,3,6,7,8,12,13,14,15,21,22,23,24,31"));    
+        assertEquals(expected, results);    
     }
     
     @org.junit.jupiter.api.Test
     public void testCollectMethodThrowingException() {
-        var nrs = new NumberRanngeSummerizerClass();
+        var obj = new NumberRanngeSummerizerClass();
         assertThrows(NumberFormatException.class, () ->
                                     {
-                                        nrs.collect("1,3,6,7,y,r");
+                                        obj.collect("1,3,6,7,y,r");
                                     });    
     }
     
     @org.junit.jupiter.api.Test
     public void testSummerieCollectionReturningEmptyString() {
-        var nrs = new NumberRanngeSummerizerClass();
+        var obj = new NumberRanngeSummerizerClass();
         
-        assertEquals("", nrs.summarizeCollection(Collections.emptyList())); 
+        var results = obj.summarizeCollection(Collections.emptyList());
+        
+        assertEquals("", results); 
     }
     
     @org.junit.jupiter.api.Test
     public void testSummerieCollectionReturningString() {
-        var nrs = new NumberRanngeSummerizerClass();
+        var obj = new NumberRanngeSummerizerClass();
         
         var expectedListed = Arrays.asList(1,3,6,7,8,12,13,14,15,21,22,23,24,31);
         
-        assertEquals("1, 3, 6-8, 12-15, 21-24, 31",nrs.summarizeCollection(expectedListed)); 
+        var results = obj.summarizeCollection(expectedListed);
+        
+        assertEquals("1, 3, 6-8, 12-15, 21-24, 31", results); 
     }
     
     
