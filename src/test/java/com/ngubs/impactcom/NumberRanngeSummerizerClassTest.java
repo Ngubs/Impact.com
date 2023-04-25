@@ -7,6 +7,7 @@ package com.ngubs.impactcom;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,7 +34,9 @@ public class NumberRanngeSummerizerClassTest {
     @org.junit.jupiter.api.Test
     public void testCollectMethodReturningCorrectList() {
         var nrs = new NumberRanngeSummerizerClass();
-        Collection<Integer> expected = Arrays.asList(1,3,6,7,8,12,13,14,15,21,22,23,24,31);
+        
+        var expected = Arrays.asList(1,3,6,7,8,12,13,14,15,21,22,23,24,31);
+        
         assertEquals(expected, nrs.collect("1,3,6,7,8,12,13,14,15,21,22,23,24,31"));    
     }
     
@@ -44,6 +47,22 @@ public class NumberRanngeSummerizerClassTest {
                                     {
                                         nrs.collect("1,3,6,7,y,r");
                                     });    
+    }
+    
+    @org.junit.jupiter.api.Test
+    public void testSummerieCollectionReturningEmptyString() {
+        var nrs = new NumberRanngeSummerizerClass();
+        
+        assertEquals("", nrs.summarizeCollection(Collections.emptyList())); 
+    }
+    
+    @org.junit.jupiter.api.Test
+    public void testSummerieCollectionReturningString() {
+        var nrs = new NumberRanngeSummerizerClass();
+        
+        var expectedListed = Arrays.asList(1,3,6,7,8,12,13,14,15,21,22,23,24,31);
+        
+        assertEquals("1, 3, 6-8, 12-15, 21-24, 31",nrs.summarizeCollection(expectedListed)); 
     }
     
     
